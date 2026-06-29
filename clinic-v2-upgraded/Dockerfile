@@ -7,9 +7,8 @@ RUN npm install --omit=dev
 
 COPY . .
 
-# Folder data persisten (mount sebagai volume saat deploy agar data tidak hilang)
+# Folder data persisten (attach a Railway Volume at /app/data via the dashboard)
 RUN mkdir -p /app/data
-VOLUME ["/app/data"]
 
 ENV PORT=3000
 ENV DATA_DIR=/app/data
