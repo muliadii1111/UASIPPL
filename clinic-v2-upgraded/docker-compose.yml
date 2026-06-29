@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  klinik-queue:
+    build: .
+    container_name: klinik-kampus-queue
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - STAFF_PASSWORD=klinik123
+      - CORS_ORIGIN=*
+      - DATA_DIR=/app/data
+      - NODE_ENV=production
+    volumes:
+      - klinik_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  klinik_data:

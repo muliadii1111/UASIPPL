@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Papan Antrean — Klinik Kampus UIR</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="display-body">
+
+  <div class="display-topbar">
+    <div class="dt-brand">
+      <div class="dt-logo">🏥</div>
+      <div>
+        <div class="dt-title">KLINIK KAMPUS UNIVERSITAS ISLAM RIAU</div>
+        <div class="dt-sub">Sistem Manajemen Antrean Digital · Real-time</div>
+      </div>
+    </div>
+    <div class="dt-clock">
+      <div class="clock-time" id="clockTime">--:--:--</div>
+      <div class="clock-date" id="clockDate">—</div>
+    </div>
+  </div>
+
+  <div class="display-content">
+    <!-- SEDANG DILAYANI -->
+    <div class="display-panel">
+      <div class="dp-label">Sedang Dilayani Sekarang</div>
+      <div id="servingArea">
+        <div class="serving-card">
+          <div class="sc-label">Nomor Antrean</div>
+          <div class="sc-num" style="color:rgba(255,255,255,.15)">—</div>
+          <div class="sc-service" style="opacity:.25">Menunggu data...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANTREAN SELANJUTNYA -->
+    <div class="display-panel">
+      <div class="dp-label">Antrean Selanjutnya</div>
+      <div id="nextArea">
+        <div style="text-align:center;padding:40px 0;opacity:.2">
+          <div style="font-size:32px;margin-bottom:8px">📋</div>
+          <div style="font-size:14px">Tidak ada antrean menunggu</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="display-ticker">
+    <span class="ticker-badge">INFO</span>
+    <span class="ticker-msg">Selamat datang di Klinik Kampus Universitas Islam Riau &nbsp;·&nbsp; Harap menunggu di ruang tunggu dan perhatikan layar ini &nbsp;·&nbsp; Pastikan nomor antrean Anda sesuai sebelum menuju ke loket &nbsp;·&nbsp; Layanan kesehatan mahasiswa UIR</span>
+  </div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+function tickClock() {
+  const now = new Date();
+  document.getElementById('clockTime').textContent = now.toLocaleTimeString('id-ID');
+  document.getElementById('clockDate').textContent = now.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+setInterval(tickClock, 1000); tickClock();
+
+async function loadDisplay() {
+  try {
+    const res = await fetch('/api/display');
+    const data = await res.json();
+
+    const servingArea = document.getElementById('servingArea');
+    if (data.sedangDilayani.length === 0) {
+      servingArea.innerHTML = `
+        <div class="serving-card">
+          <div class="sc-label">Nomor Antrean</div>
+          <div class="sc-num" style="color:rgba(255,255,255,.12)">—</div>
+          <div class="sc-service" style="opacity:.25">Belum ada yang dipanggil</div>
+        </div>`;
+    } else {
+      servingArea.innerHTML = data.sedangDilayani.map(q => `
+        <div class="serving-card active">
+          <div class="sc-label">📢 Dipanggil Sekarang</div>
+          <div class="sc-num">${q.nomorLabel}</div>
+          <div class="sc-service">${q.layanan}</div>
+        </div>`).join('');
+    }
+
+    const nextArea = document.getElementById('nextArea');
+    if (data.berikutnya.length === 0) {
+      nextArea.innerHTML = `
+        <div style="text-align:center;padding:40px 0;opacity:.2">
+          <div style="font-size:32px;margin-bottom:8px">✅</div>
+          <div style="font-size:14px">Tidak ada antrean menunggu</div>
+        </div>`;
+    } else {
+      nextArea.innerHTML = data.berikutnya.map((q, i) => `
+        <div class="next-item">
+          <span class="ni-rank">${i+1}</span>
+          <span class="ni-number">${q.nomorLabel}</span>
+          <span class="ni-service">${q.layanan}</span>
+          <span class="ni-badge">Menunggu</span>
+        </div>`).join('');
+    }
+  } catch(e) { console.error(e); }
+}
+
+const socket = io();
+socket.on('queue-updated', loadDisplay);
+loadDisplay();
+setInterval(loadDisplay, 10000);
+</script>
+</body>
+</html>

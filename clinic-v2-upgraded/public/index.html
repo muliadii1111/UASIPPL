@@ -1,0 +1,85 @@
+DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sistem Antrean Klinik Kampus — UIR</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+ 
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">🏥</div>
+    <h1>Sistem Antrean Klinik Kampus<small>Universitas Islam Riau</small></h1>
+  </div>
+  <div class="topbar-right">
+    <span class="badge-outline" id="liveTime"></span>
+    <span class="badge">UIR</span>
+  </div>
+</div>
+ 
+<div class="hero">
+  <div class="hero-eyebrow">✦ Layanan Digital Klinik Kampus</div>
+  <h1>Antrean Online<br>Klinik Kampus UIR</h1>
+  <p class="hero-sub">Daftarkan diri secara daring, pantau antrean secara real-time, dan dapatkan estimasi waktu tunggu akurat tanpa harus mengantri fisik.</p>
+  <div class="hero-stats">
+    <div class="hs-item"><div class="num">3</div><div class="lbl">Jenis Layanan</div></div>
+    <div class="hs-item"><div class="num">24 Jam</div><div class="lbl">Jam Operasional</div></div>
+    <div class="hs-item"><div class="num">7 Hari</div><div class="lbl">Buka Setiap Hari</div></div>
+    <div class="hs-item"><div class="num">~10 mnt</div><div class="lbl">Estimasi/Pasien</div></div>
+  </div>
+</div>
+ 
+<div class="landing-wrap">
+  <div class="landing-grid">
+    <a class="landing-card lc1" href="mahasiswa.html">
+      <div class="lc-icon">🎓</div>
+      <div class="lc-title">Mahasiswa</div>
+      <div class="lc-desc">Daftarkan antrean kapan saja, pantau posisi secara real-time, dan terima notifikasi saat giliran Anda tiba.</div>
+      <div class="lc-cta">Masuk ke Portal →</div>
+    </a>
+    <a class="landing-card lc2" href="petugas.html">
+      <div class="lc-icon">🩺</div>
+      <div class="lc-title">Petugas Klinik</div>
+      <div class="lc-desc">Kelola antrean, panggil pasien berikutnya, lihat statistik harian, dan atur jam operasional klinik.</div>
+      <div class="lc-cta">Buka Dashboard →</div>
+    </a>
+    <a class="landing-card lc3" href="display.html" target="_blank">
+      <div class="lc-icon">📺</div>
+      <div class="lc-title">Papan Tampilan</div>
+      <div class="lc-desc">Layar digital untuk ruang tunggu yang menampilkan nomor antrean aktif dan daftar antrean berikutnya.</div>
+      <div class="lc-cta">Buka Tampilan →</div>
+    </a>
+  </div>
+ 
+  <div class="steps-card" style="margin-top:18px;">
+    <div class="steps-title">Cara Menggunakan</div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-t">Login dengan NIM</div>
+        <div class="step-d">Masuk menggunakan NIM dan nama lengkap Anda</div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-t">Pilih Layanan</div>
+        <div class="step-d">Pilih jenis layanan klinik yang Anda butuhkan</div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-t">Pantau Antrean</div>
+        <div class="step-d">Terima notifikasi real-time saat giliran Anda tiba</div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+function updateTime(){
+  document.getElementById('liveTime').textContent = new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+updateTime();setInterval(updateTime,1000);
+</script>
+</body>
+</html>

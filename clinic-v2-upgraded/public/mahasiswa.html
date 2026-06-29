@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mahasiswa — Antrean Klinik Kampus</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">🎓</div>
+    <h1>Portal Mahasiswa<small>Antrean Klinik Kampus UIR</small></h1>
+  </div>
+  <div class="topbar-right">
+    <span class="badge" id="userBadge" style="display:none;"></span>
+  </div>
+</div>
+
+<!-- LOGIN CARD -->
+<div class="container">
+  <a class="back-link" href="index.html">← Kembali ke Halaman Utama</a>
+
+  <div class="card" id="loginCard" style="max-width:420px;margin:0 auto">
+    <h2><span class="hi">🔑</span>Login Mahasiswa</h2>
+    <div id="loginAlert"></div>
+    <label for="nim">NIM</label>
+    <input id="nim" placeholder="Contoh: 233510205" autocomplete="off"/>
+    <label for="nama">Nama Lengkap</label>
+    <input id="nama" placeholder="Nama lengkap sesuai KTM"/>
+    <button onclick="login()" class="btn-lg" style="width:100%;margin-top:4px">Masuk ke Portal</button>
+    <p style="font-size:12px;color:var(--n400);text-align:center;margin-top:14px">Data Anda digunakan hanya untuk keperluan antrean klinik</p>
+  </div>
+
+  <!-- APP AREA (setelah login) -->
+  <div id="appArea" style="display:none">
+    <div class="mhs-layout">
+
+      <!-- SIDEBAR KIRI -->
+      <div class="mhs-sidebar">
+        <!-- User Card -->
+        <div class="user-card">
+          <div class="user-avatar">👤</div>
+          <div class="user-name" id="sidebarUserName">—</div>
+          <div class="user-nim" id="sidebarUserNim">—</div>
+          <button class="secondary btn-sm" onclick="logout()" style="width:100%;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:white">Keluar</button>
+        </div>
+
+        <!-- Form Daftar Antrean -->
+        <div class="card" id="formCard">
+          <h2><span class="hi">📋</span>Daftar Antrean Baru</h2>
+          <div id="formAlert"></div>
+          <label for="layanan">Jenis Layanan</label>
+          <select id="layanan"></select>
+          <button onclick="daftarAntrean()" style="width:100%">🏥 Ambil Nomor Antrean</button>
+        </div>
+      </div>
+
+      <!-- MAIN KANAN -->
+      <div class="mhs-main">
+        <!-- Antrean Aktif -->
+        <div class="card" id="activeQueueCard" style="display:none">
+          <h2><span class="hi">🎫</span>Antrean Aktif Anda</h2>
+          <div id="activeQueueContent"></div>
+        </div>
+
+        <!-- Riwayat -->
+        <div class="card">
+          <h2><span class="hi">📅</span>Riwayat Kunjungan</h2>
+          <div id="historyArea"><div class="empty-state"><div class="ei">📋</div><div class="et">Belum ada riwayat</div><div class="ed">Riwayat kunjungan Anda akan muncul di sini</div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="js/mahasiswa.js"></script>
+</body>
+</html>

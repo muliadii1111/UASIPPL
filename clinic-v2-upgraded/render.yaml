@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: klinik-kampus-queue
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: STAFF_PASSWORD
+        sync: false
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: klinik-data
+      mountPath: /var/data
+      sizeGB: 1
